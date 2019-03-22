@@ -1,0 +1,28 @@
+openapi: 3.0.1
+info:
+  title: swift rest API
+  description: swift rest API built on top of light-rest-4j.
+  contact:
+    email: ngpari.earth@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+components:
+  schemas:
+    SwiftData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: a UUID generated
+        your_name:
+          type: integer
+          description: just a random number
+        incoming_timestamp:
+          type: string
+        read_timestamp:
+          type: string
+      xml:
+        name: swiftData
+
