@@ -13,6 +13,7 @@
 ### Setup:
 
 # Kafka
+-   topic: test
 -   broker: localhost:9092
 
 # mongodb
