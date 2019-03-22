@@ -13,14 +13,14 @@
 ### Setup:
 
 # Kafka
-    broker: localhost:9092
+-   broker: localhost:9092
 
 # mongodb
-db name: test_db
-port: 27017
-commands for mongo:
-    use test_db
-    db.createUser(
+-   db name: test_db
+-   port: 27017
+-   commands for mongo:
+-   $use test_db
+-   $db.createUser(
        {
          user: "user",
          pwd: "password",
@@ -30,7 +30,9 @@ commands for mongo:
 
 # Logs are logged in the file target/test.log
 
-# Request example: curl --header "Content-Type: application/json"   --request POST -k   http://localhost:8080/post?your_name=123
-    - returns success on success
+# Request example:
+-curl --header "Content-Type: application/json"   --request POST -k   http://localhost:8080/post?your_name=123
+-   returns success on success
+-   check the log file: target/test.log and database, a new entry should be created.
 
 
