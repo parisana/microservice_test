@@ -2,6 +2,8 @@ package com.swift.rest.model;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ public class SwiftData {
 
     Logger log = LoggerFactory.getLogger(this.getClass());
 
+    @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
     private String read_timestamp;
     private String id;
     private String incoming_timestamp;
@@ -18,6 +21,11 @@ public class SwiftData {
 
     public SwiftData () {
         this.id = UUID.randomUUID().toString();
+    }
+
+    public SwiftData(int your_name) {
+        this();
+        this.your_name = your_name;
     }
 
     @JsonProperty("read_timestamp")
@@ -43,7 +51,6 @@ public class SwiftData {
 
     public void setIncoming_timestamp(String incoming_timestamp) {
         this.incoming_timestamp = incoming_timestamp;
-        log.info(Marker.ANY_NON_NULL_MARKER, "Event: Incoming timestamp added.");
     }
     @JsonProperty("your_name")
     public Integer getYour_name() {

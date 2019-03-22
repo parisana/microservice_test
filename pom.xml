@@ -28,9 +28,6 @@
         
         <versions.maven-version>2.4</versions.maven-version>
     </properties>
-    <modules>
-        <module>consumer-service</module>
-    </modules>
 
     <dependencies>
         <dependency>

@@ -1,3 +1,7 @@
 
 # Singleton service factory configuration/IoC injection
-singletons: ${service.singletons:}
+singletons:
+  - com.swift.consumer.service.KafkaInboundHandler:
+    - com.swift.consumer.service.KafkaInboundHandlerImpl
+  - org.apache.kafka.common.serialization.Deserializer:
+      - com.swift.consumer.serialization.SwiftDataDeserializer

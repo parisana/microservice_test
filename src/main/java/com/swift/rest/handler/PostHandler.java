@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class PostHandler implements LightHttpHandler {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final KafkaProducerHandler kafkaProducerHandler;
 
@@ -27,9 +27,10 @@ public class PostHandler implements LightHttpHandler {
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         logger.info("Request for post data received");
-        final SwiftData swiftData = new SwiftData();
-        swiftData.setYour_name(Integer.parseInt(exchange.getQueryParameters().get(SwiftData.class.getDeclaredField("your_name").getName()).getFirst()));
+        final int your_name = Integer.parseInt(exchange.getQueryParameters().get(SwiftData.class.getDeclaredField("your_name").getName()).getFirst());
+        final SwiftData swiftData = new SwiftData(your_name);
         swiftData.setIncoming_timestamp(DateTimeFormatter.ISO_DATE_TIME.format(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS)));
+        log.info("Event: Incoming timestamp added. your_name: " + your_name);
         kafkaProducerHandler.sendToTopicTest(UUID.randomUUID().toString(), swiftData);
         exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
         exchange.getResponseSender().send("Success!");

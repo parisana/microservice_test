@@ -3,4 +3,5 @@
 singletons:
   - com.swift.rest.service.KafkaProducerHandler:
     - com.swift.rest.service.KafkaProducerHandlerImpl
-
+  - com.fasterxml.jackson.databind.ObjectMapper:
+      - com.fasterxml.jackson.databind.ObjectMapper

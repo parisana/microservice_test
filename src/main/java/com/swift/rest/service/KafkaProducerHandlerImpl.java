@@ -2,6 +2,7 @@ package com.swift.rest.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.networknt.service.SingletonServiceFactory;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -44,30 +45,24 @@ public class KafkaProducerHandlerImpl implements KafkaProducerHandler {
 //        final ObjectMapper objectMapper = SingletonServiceFactory.getBean(ObjectMapper.class);
         final ProducerRecord<String, String> producerRecord = new ProducerRecord<>("test", partition, objectMapper.writeValueAsString(key), objectMapper.writeValueAsString(o));
         producer.send(producerRecord, (metadata, ex)->{
-            try {
-                if (ex == null){
-                    logger.info("Sent ok: " + producerRecord + ", metadata: " + metadata);
-                } else throw new KafkaException(ex.getMessage());
-            } finally {
-                closeProducer(producer);
-            }
+            if (ex == null){
+                logger.info("Sent ok: " + producerRecord + ", metadata: " + metadata);
+            } else throw new KafkaException(ex.getMessage());
         });
     }
 
     @Override
-    public <K, V> void sendToTopicTest(K key, V o) throws KafkaException, JsonProcessingException {
+    public <K, V> void sendToTopicTest(K k, V o) throws KafkaException, JsonProcessingException {
         Producer<String, String> producer = getKafkaProducer();
         checkNotNull(producer, "Kafka Producer cannot be null");
 //        final ObjectMapper objectMapper = SingletonServiceFactory.getBean(ObjectMapper.class);
-        final ProducerRecord<String, String> producerRecord = new ProducerRecord<>("test", objectMapper.writeValueAsString(key), objectMapper.writeValueAsString(o));
+        final String key = objectMapper.writeValueAsString(k);
+        final String value = objectMapper.writeValueAsString(o);
+        final ProducerRecord<String, String> producerRecord = new ProducerRecord<>("test", key, value);
         producer.send(producerRecord, (metadata, ex)->{
-            try {
-                if (ex == null){
-                    logger.info("Sent ok: " + producerRecord + ", metadata: " + metadata);
-                } else throw new KafkaException(ex.getMessage());
-            } finally {
-                closeProducer(producer);
-            }
+            if (ex == null){
+                logger.info("Sent ok: key: " + key + "value: " + value);
+            } else throw new KafkaException(ex.getMessage());
         });
     }
 

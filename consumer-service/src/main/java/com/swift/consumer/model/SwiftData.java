@@ -1,8 +1,14 @@
 package com.swift.consumer.model;
 import java.util.Objects;
+import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SwiftData {
+
+    Logger log = LoggerFactory.getLogger(this.getClass());
 
     private String read_timestamp;
     private String id;
@@ -10,6 +16,7 @@ public class SwiftData {
     private Integer your_name;
 
     public SwiftData () {
+        this.id = UUID.randomUUID().toString();
     }
 
     @JsonProperty("read_timestamp")
@@ -25,9 +32,9 @@ public class SwiftData {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    //    public void setId(String id) {
+//        this.id = id;
+//    }
     @JsonProperty("incoming_timestamp")
     public String getIncoming_timestamp() {
         return incoming_timestamp;
@@ -56,10 +63,10 @@ public class SwiftData {
         SwiftData SwiftData = (SwiftData) o;
 
         return Objects.equals(read_timestamp, SwiftData.read_timestamp) &&
-        Objects.equals(id, SwiftData.id) &&
-        Objects.equals(incoming_timestamp, SwiftData.incoming_timestamp) &&
-        
-        Objects.equals(your_name, SwiftData.your_name);
+                Objects.equals(id, SwiftData.id) &&
+                Objects.equals(incoming_timestamp, SwiftData.incoming_timestamp) &&
+
+                Objects.equals(your_name, SwiftData.your_name);
     }
 
     @Override
